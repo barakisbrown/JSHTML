@@ -5,28 +5,50 @@
     </head>
     <body>
         <input type="text" id="todo-title" />
+        <input type="date" id="date-picker"/>
         <button onclick="addTodo()">Add Todo</button>
 
         <div id="todo-list">
 
         </div>
         <script>
-            const todos = ['Get Groceries','Wash car','Make dinner'];
+            const todos = [{
+                    title:'Get Groceries',
+                    dueDate:'2021-10-04'
+                },{
+                    title:'Wash Car',
+                    dueDate: '2021-02-03'
+                },{
+                    title:'Make dinner',
+                    dueDate: '2021-03-04'
+                }];
+
+
+
+
+
             render();
 
             function addTodo() {
                 const textBox = document.getElementById('todo-title');
                 const title = textBox.value;
-                todos.push(title);
+                
+                const datePicker = document.getElementById('date-picker');
+                const dueDate = datePicker.value;
+                todos.push({
+                    title:title,
+                    dueDate:dueDate
+                });
+
                 render();
             }
 
             function render() {
                 // reset the list
                 document.getElementById('todo-list').innerHTML = '';
-                todos.forEach(function (todoTitle) {
+                todos.forEach(function (todo) {
                     const element = document.createElement('div');
-                    element.innerText = todoTitle;
+                    element.innerText = todo.title + ' ' + todo.dueDate;
                     const todoList = document.getElementById('todo-list');
                     todoList.appendChild(element);
                 });
