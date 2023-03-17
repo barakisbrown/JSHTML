@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            let temps = [21,38,32,50,1,-1];
+            let foodArray = [
+                    {name: 'Apple',color:'red'},
+                    {name: 'Egg', color: 'white'},
+                    {name: 'Banna', color: 'yellow'},
+                    {name: 'Tomato', color: 'red'}
+                ];                           
+            
+                function upper(str) {
+                return str.toUpperCase();
+            }
+
+            function aboveFreezing(temps)
+            {
+                let newTemps = temps.filter(function(temp)
+                {
+                    if (temp <= 32)
+                        return true;
+                    else
+                        return false;
+                });
+                return newTemps;
+            }
+
+            function removeRed(food)
+            {
+                return food.filter(function(single)
+                {
+                    if (single.color !== "red")
+                        return true;
+                    else
+                        return false;
+                });
+
+            }
+            
+            newTemps = aboveFreezing(temps);
+        </script>
+    </body>
+</html>
