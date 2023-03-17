@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Exercise 11
+        </title>
+    </head>
+    <body>
+        <script>
+            let total = 0;
+
+            // FRUIT IS AN OBJECT
+            // APPLE/ORANGE/EGG ARE KEYS
+            // 3,4,2 are values of those keys
+            fruit = { Apple: 3, Orange: 4, Egg: 2 };
+
+            createCart(fruit);
+
+            function createCart(fruitObj) {
+                const foods = Object.keys(fruitObj);
+
+
+                foods.forEach(function(single)
+                    {
+                        const element = document.createElement('div');
+                        const button = document.createElement('button');
+                        // GET PRICE
+                        const foodPrice = fruitObj[single];
+                        element.innerText = single + ' $' + foodPrice;
+                        // ADD BUTTON
+                        button.innerText = 'Add';
+                        
+                        // Code is used when the button is clicked
+                        button.onclick = function () 
+                        {
+                            total = total + foodPrice;
+                        };
+
+                        element.appendChild(button);
+                        // RENDER TO THE HTML
+                        document.body.appendChild(element);
+                    });
+
+            }
+        </script>
+    </body>
+</html>
