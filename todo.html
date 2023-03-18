@@ -13,7 +13,19 @@
         </div>
         <script>
             // BEGIN MODEL SECTION
-            let todos = [{
+            // If localstorage has a todo array, then use it
+            // Otherwise, use the default array
+            let todos;
+
+            // retrieve localstorage and check if it an array
+            const savedTodos = JSON.parse(localStorage.getItem('todos'));
+            
+            // CHECK IF ARRAY EXIST
+            if (Array.isArray(savedTodos)) {
+                todos = savedTodos;
+
+            } else {
+                todos = [{
                     title:'Get Groceries',
                     dueDate:'2021-10-04',
                     id: 'id1'
@@ -26,6 +38,7 @@
                     dueDate: '2021-03-04',
                     id: 'id3'
                 }];
+            }
 
             // Creates a todo
             function createTodo(title, dueDate) {
@@ -37,6 +50,8 @@
                     dueDate:dueDate,
                     id: id
                 });
+
+                saveTodos();
                 
             }
             // Delete a todo
@@ -50,7 +65,15 @@
                 else
                     return true;
                 });
+
+                saveTodos();
             }
+
+            function saveTodos() {
+                // save data to local storage
+                localStorage.setItem('todos',JSON.stringify(todos));
+            }
+
             // END MODEL SECTION
             render();
 
