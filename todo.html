@@ -12,7 +12,7 @@
 
         </div>
         <script>
-            const todos = [{
+            let todos = [{
                     title:'Get Groceries',
                     dueDate:'2021-10-04',
                     id: 'id1'
@@ -39,7 +39,7 @@
                 const datePicker = document.getElementById('date-picker');
                 const dueDate = datePicker.value;
 
-                const id = new Date().getTime();
+                const id = '' + new Date().getTime();
 
                 todos.push({
                     title:title,
@@ -54,13 +54,16 @@
                 const deleteButton = event.target;
                 const idToDelete = deleteButton.id;
 
-                todos.filter(function(todo) {
-                    if (todos.id === idToDelete)
-                        return true;
-                    else
+            
+                todos = todos.filter(function(todo) {
+
+                    if (todo.id === idToDelete)
                         return false;
+                    else
+                        return true;
                 });
                 
+                render();
             }
 
             function render() {
