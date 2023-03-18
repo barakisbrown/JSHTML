@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Todo App</title>
+    </head>
+    <body>
+        <input type="text" id="todo-title" />
+        <input type="date" id="date-picker"/>
+        <button onclick="addTodo()">Add Todo</button>
+
+        <div id="todo-list">
+
+        </div>
+        <script>
+            // BEGIN MODEL SECTION
+            let todos = [{
+                    title:'Get Groceries',
+                    dueDate:'2021-10-04',
+                    id: 'id1',
+                    isDone : false
+                },{
+                    title:'Wash Car',
+                    dueDate: '2021-02-03',
+                    id: 'id2',
+                    isDone : false
+                },{                
+                    title:'Make dinner',
+                    dueDate: '2021-03-04',
+                    id: 'id3',
+                    isDone : false
+                }];
+
+            // Creates a todo
+            function createTodo(title, dueDate) {
+                
+                const id = '' + new Date().getTime();
+
+                todos.push({
+                    title:title,
+                    dueDate:dueDate,
+                    id: id,
+                    isDone : false
+                });
+                
+            }
+            // Delete a todo
+            function removeTodo(idToDelete) {
+
+                todos = todos.filter(function(todo) {
+                // If the id of this todo matches idToDelete, return false
+                // otherwise return true        
+                if (todo.id === idToDelete)
+                   return false;
+                else
+                    return true;
+                });
+            }
+
+            // END MODEL SECTION
+            render();
+
+            // CONTROLLER SECTION
+            function addTodo() {
+                const textBox = document.getElementById('todo-title');
+                const title = textBox.value;
+                
+                const datePicker = document.getElementById('date-picker');
+                const dueDate = datePicker.value;
+
+                createTodo(title,dueDate);
+
+                render();
+            }
+
+            function deleteTodo(event) {
+                const deleteButton = event.target;
+                const idToDelete = deleteButton.id;
+
+                removeTodo(idToDelete);
+                
+                render();
+            }
+
+
+            function handleCheckBox(event)
+            {
+                const checkedBox = event.target;
+                // see if we can retreive the id from the checkedbox dataset
+                const checkID = checkedBox.dataset.todoId;
+                // Now find todo that has id of checkID
+                const todo = todos.find(todo => todo.id === checkID);
+                todo.isDone = checkedBox.checked;
+
+                render();
+            }
+            // END CONTROLLER SECTION
+
+            // VIEW
+            function render() {
+                // reset the list
+                document.getElementById('todo-list').innerHTML = '';
+
+                todos.forEach(function (todo) {
+                    const element = document.createElement('div');
+                    element.innerText = todo.title + ' ' + todo.dueDate;
+
+                    const checkBox = document.createElement('input');
+                    checkBox.setAttribute("type","checkbox");
+                    checkBox.onchange = handleCheckBox;
+                    checkBox.dataset.todoId = todo.id;
+                    // DETERMINE IF THE CHECKBOX IS CHECKED OR NOT
+                    if (todo.isDone == true)
+                        checkBox.checked = true;
+                    else
+                        checkBox.checked = false;
+
+                    element.prepend(checkBox);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = "Delete";
+                    deleteButton.style = 'margin-left: 12px';
+                    deleteButton.onclick = deleteTodo;
+                    deleteButton.id = todo.id;
+                    element.appendChild(deleteButton);
+
+                    const todoList = document.getElementById('todo-list');
+                    todoList.appendChild(element);
+                    
+                });
+            }
+            // END VIEW SECTION
+        </script>
+    </body>
+</html>
