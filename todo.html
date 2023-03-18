@@ -12,6 +12,7 @@
 
         </div>
         <script>
+            // BEGIN MODEL SECTION
             let todos = [{
                     title:'Get Groceries',
                     dueDate:'2021-10-04',
@@ -26,19 +27,9 @@
                     id: 'id3'
                 }];
 
-
-
-
-
-            render();
-
-            function addTodo() {
-                const textBox = document.getElementById('todo-title');
-                const title = textBox.value;
+            // Creates a todo
+            function createTodo(title, dueDate) {
                 
-                const datePicker = document.getElementById('date-picker');
-                const dueDate = datePicker.value;
-
                 const id = '' + new Date().getTime();
 
                 todos.push({
@@ -46,6 +37,32 @@
                     dueDate:dueDate,
                     id: id
                 });
+                
+            }
+            // Delete a todo
+            function removeTodo(idToDelete) {
+
+                todos = todos.filter(function(todo) {
+                // If the id of this todo matches idToDelete, return false
+                // otherwise return true        
+                if (todo.id === idToDelete)
+                   return false;
+                else
+                    return true;
+                });
+            }
+            // END MODEL SECTION
+            render();
+
+            // CONTROLLER SECTION
+            function addTodo() {
+                const textBox = document.getElementById('todo-title');
+                const title = textBox.value;
+                
+                const datePicker = document.getElementById('date-picker');
+                const dueDate = datePicker.value;
+
+                createTodo(title,dueDate);
 
                 render();
             }
@@ -54,18 +71,13 @@
                 const deleteButton = event.target;
                 const idToDelete = deleteButton.id;
 
-            
-                todos = todos.filter(function(todo) {
-
-                    if (todo.id === idToDelete)
-                        return false;
-                    else
-                        return true;
-                });
+                removeTodo(idToDelete);
                 
                 render();
             }
+            // END CONTROLLER SECTION
 
+            // VIEW
             function render() {
                 // reset the list
                 document.getElementById('todo-list').innerHTML = '';
@@ -83,6 +95,7 @@
                     todoList.appendChild(element);
                 });
             }
+            // END VIEW SECTION
         </script>
     </body>
 </html>
